@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OOP C++ | Semester Quiz</title>
+<style>
+:root{
+  --navy:#17324d;--blue:#285b86;--blue-soft:#edf4fa;--ink:#202b36;
+  --muted:#647383;--line:#d9e1e8;--paper:#ffffff;--bg:#f3f5f7;
+  --green:#26734d;--red:#a43b3b;--amber:#8b5c16;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+header{background:var(--navy);color:#fff;border-bottom:4px solid #8ca9c2}
+.header-inner,main,footer{width:min(920px,calc(100% - 32px));margin:auto}
+header .header-inner{padding:27px 0 25px}
+.kicker{font-size:11px;letter-spacing:1.7px;text-transform:uppercase;color:#c7d7e5;font-weight:700}
+h1{font-size:clamp(25px,4vw,34px);line-height:1.2;margin:8px 0 5px;font-weight:700}
+.subtitle{margin:0;color:#dce6ee;font-size:15px}
+main{padding:27px 0 42px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:26px;box-shadow:0 2px 9px rgba(25,45,65,.045)}
+h2{font-size:21px;margin:0 0 12px;color:var(--navy)}
+h3{font-size:16px;margin:0 0 9px;color:var(--navy)}
+p{margin:8px 0}
+.meta{display:flex;gap:9px;flex-wrap:wrap;margin:17px 0 21px}
+.pill{font-size:12px;font-weight:700;color:#315574;background:var(--blue-soft);border:1px solid #dce8f1;padding:5px 10px;border-radius:4px}
+.instructions{background:#f7f9fb;border:1px solid var(--line);padding:16px 18px;margin:18px 0 21px;border-radius:5px}
+.instructions ol{padding-left:21px;margin:7px 0 0}
+.instructions li{margin:4px 0}
+label.field-label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px}
+input[type=text]{width:100%;max-width:430px;padding:12px;border:1px solid #bfcbd6;border-radius:4px;font-size:16px}
+input:focus{outline:2px solid #a9c5dd;outline-offset:1px}
+button{font:inherit;font-weight:700;border:1px solid transparent;border-radius:4px;padding:10px 17px;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{background:var(--blue);color:#fff}
+.primary:hover:not(:disabled){background:#20496d}
+.secondary{background:#eef2f5;border-color:#d4dde5;color:#34495b}
+.secondary:hover:not(:disabled){background:#e3eaf0}
+.danger{background:#fff;color:#963e3e;border-color:#d9baba}
+.danger:hover:not(:disabled){background:#fbf2f2}
+.message{font-size:14px;min-height:21px;color:var(--red)}
+.topline{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:13px;margin-bottom:9px}
+.progress{height:7px;background:#e8edf1;border-radius:10px;overflow:hidden;margin-bottom:25px}
+.bar{height:100%;width:0;background:var(--blue);transition:width .15s}
+.qnum{font-size:12px;letter-spacing:1px;font-weight:700;color:var(--blue);text-transform:uppercase}
+.question{font-size:19px;line-height:1.5;font-weight:700;margin:8px 0 15px}
+.code-wrap{margin:13px 0 18px;border:1px solid #d7e0e8;border-radius:5px;overflow:hidden;background:#f7f9fb}
+.code-title{padding:7px 12px;background:#edf2f6;border-bottom:1px solid #d7e0e8;font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:#526577}
+pre{margin:0;padding:14px;overflow-x:auto;white-space:pre;font:13px/1.55 Consolas,"Courier New",monospace;color:#1e2d3a;tab-size:4}
+.option{display:flex;align-items:flex-start;gap:11px;padding:12px 13px;border:1px solid var(--line);border-radius:5px;margin:9px 0;cursor:pointer;background:#fff}
+.option:hover{border-color:#9eb5c8;background:#fafcfd}
+.option.selected{border-color:#6488a7;background:#f1f6fa}
+.option input{margin-top:4px;accent-color:var(--blue);flex:0 0 auto}
+.option span{font-size:15px;line-height:1.45}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:23px;padding-top:17px;border-top:1px solid #e6ebef}
+.numbers{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px}
+.numbers button{padding:5px 9px;min-width:34px;font-size:12px;background:#f0f3f6;border-color:#e0e6eb;color:#465666}
+.numbers button.current{background:var(--blue);border-color:var(--blue);color:white}
+.numbers button.done{outline:1px solid #8ba9c2}
+.submit-row{margin-top:22px;padding-top:17px;border-top:1px solid #e6ebef;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.small-note{font-size:12px;color:var(--muted)}
+.hidden{display:none!important}
+.result-head{text-align:center;border-bottom:1px solid var(--line);padding-bottom:22px}
+.score{font-size:48px;line-height:1.2;font-weight:700;color:var(--navy);margin:8px}
+.review{padding:17px 0;border-bottom:1px solid #e6ebef}
+.review:last-child{border-bottom:0}
+.review-q{font-weight:700;margin-bottom:8px}
+.correct{color:var(--green);font-weight:700}
+.wrong{color:var(--red);font-weight:700}
+.review-code{margin:8px 0}
+.review-code pre{font-size:12px}
+.explanation{font-size:14px;color:#4f5e6b;margin-top:8px}
+.loader{width:38px;height:38px;border:4px solid #e0e8ef;border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 15px}
+@keyframes spin{to{transform:rotate(360deg)}}
+footer{border-top:1px solid #dce3e9;padding:18px 0 26px;text-align:center;color:#667585;font-size:12px}
+footer strong{color:#34495b}
+@media(max-width:600px){
+  .panel{padding:18px}
+  .question{font-size:17px}
+  .topline{font-size:12px}
+  .submit-row{align-items:flex-start;flex-direction:column}
+  .nav button{flex:1}
+  pre{font-size:12px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <h1>Object-Oriented Programming in C++ Group Quiz</h1>
+  </div>
+</header>
+
+<main>
+<section id="start" class="panel">
+  <h2>Quiz Instructions</h2>
+  <div class="meta">
+    <span class="pill">30 Questions</span>
+    <span class="pill">Moderate–Hard</span>
+  </div>
+  <div class="instructions">
+    <h3>Before you begin</h3>
+    <ol>
+      <li>Enter your registered CMS number to verify your identity.</li>
+      <li>Read each question and all four options carefully.</li>
+      <li>For code-based questions, read the complete code before selecting an answer.</li>
+      <li>You may move between questions and change your answers before submission.</li>
+      <li>Your score and answer review will appear after successful submission.</li>
+      <li>Each CMS number can be used for only one successful submission.</li>
+    </ol>
+  </div>
+  <label class="field-label" for="cms">CMS Number</label>
+  <input id="cms" type="text" maxlength="30" placeholder="Enter your registered CMS number" autocomplete="off">
+  <p id="cmsMessage" class="message" role="status" aria-live="polite"></p>
+  <button class="primary" id="startButton" onclick="startQuiz()">Verify CMS &amp; Start Quiz</button>
+</section>
+
+<section id="quiz" class="panel hidden">
+  <div class="topline">
+    <span id="progressText"></span>
+    <span id="answeredText"></span>
+  </div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="qnum" id="qnum"></div>
+  <div class="question" id="question"></div>
+  <div id="codeContainer" class="code-wrap hidden">
+    <div class="code-title">C++ Code</div>
+    <pre><code id="codeBlock"></code></pre>
+  </div>
+  <div id="options"></div>
+  <div class="nav">
+    <button class="secondary" id="prev" onclick="move(-1)">Previous</button>
+    <button class="primary" id="next" onclick="move(1)">Next</button>
+  </div>
+  <div class="numbers" id="numbers" aria-label="Question navigation"></div>
+  <div class="submit-row">
+    <span class="small-note">Review your answers before submitting.</span>
+    <button class="danger" onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+</section>
+
+<section id="submitting" class="panel hidden" style="text-align:center;padding:48px 20px">
+  <div class="loader"></div>
+  <h2>Submitting Quiz</h2>
+  <p class="small-note">Please wait while your result is being recorded. Do not refresh or close this page.</p>
+</section>
+
+<section id="result" class="panel hidden">
+  <div class="result-head">
+    <div class="kicker" style="color:#71869a">Quiz Completed</div>
+    <h2 id="greeting"></h2>
+    <div class="score" id="score"></div>
+    <p id="percent"></p>
+    <p id="resultMsg"></p>
+    <p id="submissionMessage" class="small-note" role="status" aria-live="polite"></p>
+  </div>
+  <h2 style="margin-top:24px">Answer Review</h2>
+  <p class="small-note">Each question is shown with your selected answer, the correct answer, and a brief explanation.</p>
+  <div id="review"></div>
+</section>
+</main>
+
+<footer><strong>Created by Uzair Mustafa</strong></footer>
+
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9m3PcsrKx9s6SrAlTJnowjsc-8pPloBl4LmHF28GSZSjSbisDSxTBiF_VWlvHjzPiyg/exec";
+const questions = [{"q":"What is printed after the invalid value is passed to setMarks()?","code":"#include <iostream>\nusing namespace std;\n\nclass Student {\n    int marks;\npublic:\n    Student() : marks(75) {}\n    void setMarks(int m) {\n        if (m >= 0 && m <= 100)\n            marks = m;\n    }\n    int getMarks() const { return marks; }\n};\n\nint main() {\n    Student s;\n    s.setMarks(120);\n    cout << s.getMarks();\n}","options":["120","75","0","Compilation error"],"answer":1,"explain":"The setter updates marks only when the new value is between 0 and 100. Since 120 is invalid, the original value 75 remains unchanged. The getter then returns 75."},{"q":"What is printed by this program?","code":"#include <iostream>\nusing namespace std;\n\nclass Rectangle {\n    int width, height;\npublic:\n    Rectangle(int w, int h) : width(w), height(h) {}\n    Rectangle(int side) : Rectangle(side, side) {}\n    void show() { cout << width << \" \" << height; }\n};\n\nint main() {\n    Rectangle r(4);\n    r.show();\n}","options":["4 1","1 4","4 4","Compilation error"],"answer":2,"explain":"The one-argument constructor delegates to the two-argument constructor, passing side for both width and height. The object therefore stores 4 and 4."},{"q":"A method is declared inside a class as `void display();`. Which definition correctly implements it outside the class?","options":["`void display::Box() { }`","`Box::void display() { }`","`void Box::display() { }`","`void Box.display() { }`"],"answer":2,"explain":"The correct form is returnType ClassName::methodName(parameters). The scope resolution operator connects the outside definition to the class."},{"q":"What is printed by this program?","code":"#include <iostream>\nusing namespace std;\n\nvoid increase(int *p) {\n    *p = *p + 5;\n}\n\nint main() {\n    int values[] = {2, 4, 6};\n    int *p = values;\n    increase(p + 1);\n    cout << values[1];\n}","options":["2","4","6","9"],"answer":3,"explain":"p + 1 points to values[1]. The function receives that address and increases the original second element from 4 to 9."},{"q":"Which statement correctly describes the difference between a pointer and a reference in the following declarations?","code":"int x = 10;\\nint *p = &x;\\nint &r = x;","options":["p and r both store independent copies of x.","p stores x's address; r is another name for x.","r stores an address and can later refer to a different variable.","p cannot be changed after initialization, but r can be reseated."],"answer":1,"explain":"A pointer is a variable that stores an address and can be reassigned. A reference is an alias for an existing object and cannot be reseated after initialization."},{"q":"A base class has public, protected, and private members. Which statement correctly describes what happens when it is inherited using `protected` inheritance?","options":["Base public and protected members become protected in the derived class; base private members remain inaccessible directly.","Base public members remain public, and protected members become private.","All base members become public in the derived class.","Base private members become protected and can be accessed directly."],"answer":0,"explain":"With protected inheritance, the base class's public and protected members are accessible as protected members in the derived class. Private base members are not directly accessible."},{"q":"What is printed by this program?","code":"#include <iostream>\nusing namespace std;\n\nclass Person {\nprotected:\n    int id;\npublic:\n    Person(int x) : id(x) {}\n    void show() { cout << \"Person \" << id << \" \"; }\n};\n\nclass Student : public Person {\npublic:\n    Student(int x) : Person(x) {}\n    void show() {\n        Person::show();\n        cout << \"Student\";\n    }\n};\n\nint main() {\n    Student s(12);\n    s.show();\n}","options":["Student 12 Person","Person 12 Student","Person Student 12","Compilation error"],"answer":1,"explain":"Student::show() first calls the base-class version using Person::show(), which prints Person 12. It then prints Student."},{"q":"What is printed by this program, and why can the two `setLength()` calls be written in one statement?","code":"#include <iostream>\nusing namespace std;\n\nclass Box {\n    int length;\npublic:\n    Box(int x) : length(x) {}\n\n    Box& setLength(int value) {\n        this->length = value;\n        return *this;\n    }\n\n    void display() const {\n        cout << length;\n    }\n};\n\nint main() {\n    Box b(5);\n    b.setLength(10).setLength(18);\n    b.display();\n}","options":["5","10","18","Compilation error"],"answer":2,"explain":"setLength() returns *this by reference, so the second call operates on the same Box object. The first call sets length to 10; the second changes it to 18. display() therefore prints 18."},{"q":"Which statement about a constructor is correct?","options":["It must have the same name as the class and has no return type.","It must return an object of its class.","It is called only when delete is used.","It must always be declared private."],"answer":0,"explain":"A constructor has the class name and no return type. It is called when an object is created."},{"q":"What is printed by this program?","code":"#include <iostream>\\nusing namespace std;\\n\\nclass Sample {\\npublic:\\n    Sample() { cout << \"D\"; }\\n    Sample(int x) { cout << \"P\"; }\\n};\\n\\nint main() {\\n    Sample a;\\n    Sample b(7);\\n    Sample c = b;\\n}","options":["DP","DPP","DPD","Compilation error because constructors cannot be overloaded."],"answer":0,"explain":"a calls the default constructor and prints D. b calls the parameterized constructor and prints P. c is copy-initialized from b; the compiler-provided copy constructor does not print anything. Output: DP."},{"q":"In the following program, which statement correctly identifies the operation performed by the line `Item second = first;`?","code":"class Item {\\npublic:\\n    int code;\\n    Item(int c) : code(c) {}\\n};\\n\\nint main() {\\n    Item first(25);\\n    Item second = first;\\n}","options":["Default construction of second followed by assignment.","Copy construction of second using first.","Reference binding; second becomes an alias of first.","The line is invalid because objects cannot be copied."],"answer":1,"explain":"The declaration initializes a new object from an existing object, so it invokes the copy constructor. Assignment would be written after second already existed, such as second = first."},{"q":"Why is a member initializer list required in this example?","code":"#include <string>\nusing namespace std;\n\nclass Record {\n    const int id;\n    int &ref;\npublic:\n    Record(int value, int &x) : id(value), ref(x) {}\n};\n\nint main() {\n    int value = 10;\n    Record r(5, value);\n}","options":["Because all integer members must use initializer lists.","Because const and reference data members must be initialized when the object is created.","Because constructors cannot contain assignment statements.","Because references can only be used in static functions."],"answer":1,"explain":"A const data member and a reference member must be initialized, not assigned later in the constructor body. The initializer list performs that initialization."},{"q":"What is printed when this program finishes?","code":"#include <iostream>\n#include <string>\nusing namespace std;\n\nclass Note {\n    string name;\npublic:\n    Note(string n) : name(n) { cout << \"+\" << name << \" \"; }\n    ~Note() { cout << \"-\" << name << \" \"; }\n};\n\nint main() {\n    Note a(\"A\");\n    {\n        Note b(\"B\");\n    }\n    Note c(\"C\");\n}","options":["+A +B +C -A -B -C","+A +B -B +C -C -A","+A +B -B +C -A -C","+A +B +C -C -B -A"],"answer":1,"explain":"A is constructed first, then B. B is destroyed at the end of the inner block. C is then constructed. At the end of main, C is destroyed before A. The exact sequence is +A +B -B +C -C -A."},{"q":"What is printed by this program?","code":"#include <iostream>\nusing namespace std;\n\nclass Number {\n    int value;\npublic:\n    Number(int v) : value(v) { cout << \"Created \"; }\n    ~Number() { cout << \"Destroyed\"; }\n};\n\nint main() {\n    Number *p = new Number(8);\n    delete p;\n}","options":["Created Destroyed","Destroyed Created","Created only","Compilation error"],"answer":0,"explain":"The new expression creates the heap object and runs its constructor, printing Created. delete ends the object’s lifetime and runs its destructor, printing Destroyed."},{"q":"What is the main problem with the following code?","code":"int main() {\\n    int *p = new int(40);\\n    p = new int(80);\\n    delete p;\\n}","options":["The first allocated integer is lost without being deleted, causing a memory leak.","The second allocation is automatically deleted when p is reassigned.","The code attempts to delete a stack variable.","The code is invalid because new cannot initialize an integer."],"answer":0,"explain":"After the second new expression, p no longer stores the address of the first allocation. That first allocation can no longer be reached and is leaked."},{"q":"Which statement correctly distinguishes an array of objects from an array of pointers to objects?","code":"Student groupA[3];\\nStudent *groupB[3];","options":["Both declarations immediately create three Student objects.","groupA contains three Student objects; groupB contains three pointer variables.","groupA contains three pointers; groupB contains three Student objects.","Neither declaration creates storage until new is used."],"answer":1,"explain":"groupA is an array of actual Student objects. groupB is an array of three Student pointers; the pointed-to objects must be created separately if needed."},{"q":"What is the output of this program?","code":"#include <iostream>\\nusing namespace std;\\n\\nclass Counter {\\n    static int total;\\npublic:\\n    Counter() { total++; }\\n    ~Counter() { total--; }\\n    static int getTotal() { return total; }\\n};\\nint Counter::total = 0;\\n\\nint main() {\\n    Counter a, b;\\n    { Counter c; cout << Counter::getTotal() << \" \"; }\\n    cout << Counter::getTotal();\\n}","options":["2 3","3 2","3 3","2 2"],"answer":1,"explain":"a and b make the shared count 2. c raises it to 3 inside the block. When the block ends, c is destroyed and the count returns to 2. Correct output: 3 2."},{"q":"Which statement about a static member function is correct?","options":["It has a separate copy for every object.","It can directly access non-static data members without an object.","It has no this pointer and can directly access only static members.","It can be called only through a dynamically allocated object."],"answer":2,"explain":"A static member function belongs to the class rather than one particular object. It has no this pointer, so it cannot directly access non-static members."},{"q":"A class has a parameterized constructor but no default constructor. What happens when this statement is compiled?","code":"#include <string>\nusing namespace std;\n\nclass Student {\npublic:\n    Student(string name) {}\n};\n\nint main() {\n    Student list[3];\n}","options":["Three Student objects are created with empty names.","The compiler automatically supplies Student().","Compilation fails because each array element needs a default constructor.","Only the first array element is created."],"answer":2,"explain":"This array declaration creates each element without arguments. Since Student() is not available, the compiler cannot construct the elements."},{"q":"Which choice correctly describes the effect of passing an object by value rather than by reference?","options":["The function works directly on the caller's original object in both cases.","Passing by value creates a separate parameter object; passing by reference aliases the original object.","Passing by reference always creates a complete copy.","Passing by value is not allowed for class objects."],"answer":1,"explain":"Pass-by-value initializes a separate parameter object, normally using copy construction. Pass-by-reference gives the function an alias to the caller's object."},{"q":"What is the purpose of declaring a member function with a trailing `const` as shown below?","code":"class Student {\\n    int roll;\\npublic:\\n    int getRoll() const { return roll; }\\n};","options":["It makes roll a static member.","It promises that the function will not modify the object's non-mutable data members.","It prevents the function from returning an integer.","It allows the function to modify private members without restriction."],"answer":1,"explain":"A const member function promises not to modify the object's ordinary data members. It can also be called on const objects."},{"q":"Which relationship is best represented by public inheritance?","options":["A Car has an Engine.","A Library has Books.","A Student is a Person.","A Computer has a Keyboard."],"answer":2,"explain":"Inheritance represents an is-a relationship. A Student is a Person. A Car has an Engine is a has-a relationship and is better represented by a data member."},{"q":"What is printed by this program?","code":"#include <iostream>\n#include <string>\nusing namespace std;\n\nclass Person {\nprotected:\n    string name;\npublic:\n    Person(string n) : name(n) {}\n    void introduce() { cout << \"Person: \" << name << endl; }\n};\n\nclass Student : public Person {\n    int roll;\npublic:\n    Student(string n, int r) : Person(n), roll(r) {}\n    void introduce() { cout << \"Student: \" << name << \" \" << roll << endl; }\n};\n\nint main() {\n    Person p(\"Ali\");\n    Student s(\"Sara\", 12);\n    p.introduce();\n    s.introduce();\n}","options":["Person: Ali then Person: Sara","Student: Ali then Student: Sara 12","Person: Ali then Student: Sara 12","Compilation error"],"answer":2,"explain":"Each object calls the method belonging to its own class. The Student class defines its own version of introduce(), replacing the inherited version for Student objects."},{"q":"Which statement correctly describes a static data member?","options":["Every object has its own separate copy.","One copy is shared by all objects of the class.","It can be accessed only inside a constructor.","It must be initialized separately for each object."],"answer":1,"explain":"A static data member belongs to the class rather than to one object. All objects share the same single copy."},{"q":"What does this declaration create?","code":"int n = 4;\nStudent *list = new Student[n];","options":["An array of four Student pointers and no Student objects.","A dynamic array of four Student objects on the heap.","One Student object on the stack.","A fixed-size array whose elements are references."],"answer":1,"explain":"new Student[n] creates n actual Student objects in one dynamically allocated array. list stores the address of the first element; each element is accessed as list[i] and the array is released with delete[]."},{"q":"What is printed by this program?","code":"#include <iostream>\\nusing namespace std;\\n\\nclass Base {\\npublic:\\n    Base() { cout << \"Base \"; }\\n    ~Base() { cout << \"~Base \"; }\\n};\\nclass Derived : public Base {\\npublic:\\n    Derived() { cout << \"Derived \"; }\\n    ~Derived() { cout << \"~Derived \"; }\\n};\\nint main() {\\n    Derived obj;\\n}","options":["Derived Base ~Derived ~Base","Base Derived ~Derived ~Base","Base Derived ~Base ~Derived","Derived Base ~Base ~Derived"],"answer":1,"explain":"The base part is constructed before the derived part. Destruction reverses that order: the derived destructor runs before the base destructor."},{"q":"A class GraduateStudent is derived from Student, and Student is derived from Person. Which constructor should GraduateStudent call in its initializer list to initialize its direct base?","options":["Person(...), because it is the oldest base.","Student(...), because Student is its direct base.","Both Person(...) and Student(...) directly.","No base constructor call is needed."],"answer":1,"explain":"A derived class initializes only its direct base. GraduateStudent calls Student(...); Student is responsible for calling Person(...)."},{"q":"A class inherits publicly from Base. How are Base’s public and protected members treated in the derived class?","options":["Both become private.","Base public members remain public, and Base protected members remain protected.","Both become public.","Base private members become protected and directly accessible."],"answer":1,"explain":"With public inheritance, base public members remain public and base protected members remain protected. Base private members are not directly accessible in derived-class code."},{"q":"Each pointer in `group` has been assigned a separately allocated Student object. Which code correctly destroys all three objects?","code":"Student *group[3];\nfor (int i = 0; i < 3; i++)\n    group[i] = new Student(\"Ali\", i + 1, 3.0);","options":["`delete[] group;`","`delete group;`","Call `delete group[i];` once for each allocated element.","No delete is needed because group is an array."],"answer":2,"explain":"group is an array of pointer variables, not one dynamically allocated Student array. Each new Student(...) creates a separate heap object, so each pointed-to object needs its own delete."},{"q":"Which description correctly matches the inheritance types covered in the lectures?","options":["Single: one base and one derived; multilevel: an inheritance chain; hierarchical: several derived classes share one base.","Single: one class has many objects; multilevel: many objects share data; hierarchical: a class contains another class.","Single and multilevel both require two base classes; hierarchical requires a special function.","These terms describe arrays of objects, not class relationships."],"answer":0,"explain":"Single inheritance has one base and one derived class. Multilevel inheritance forms a chain such as Person → Student → GraduateStudent. Hierarchical inheritance has multiple derived classes sharing one base, such as Student and Teacher deriving from Person."}];
+
+async function callBackend(payload) {
+  const response = await fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+  if (!response.ok) throw new Error("Could not connect to the server. Please try again.");
+  return await response.json();
+}
+
+let current = 0;
+let answers = Array(questions.length).fill(null);
+let studentName = "";
+let verifiedCMS = "";
+let submitting = false;
+
+async function startQuiz() {
+  const cms = document.getElementById("cms").value.trim();
+  const message = document.getElementById("cmsMessage");
+  const button = document.getElementById("startButton");
+
+  if (!cms) {
+    message.textContent = "Please enter your CMS number.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Verifying...";
+  message.textContent = "Checking your CMS number. Please wait.";
+
+  try {
+    const result = await callBackend({ action: "validate", cms: cms });
+    if (!result.success) {
+      message.textContent = result.message || "CMS verification failed.";
+      button.disabled = false;
+      button.textContent = "Verify CMS & Start Quiz";
+      return;
+    }
+    verifiedCMS = cms;
+    studentName = result.studentName || "";
+    document.getElementById("start").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+    render();
+  } catch (error) {
+    message.textContent = error.message || "Unable to verify CMS. Please try again.";
+    button.disabled = false;
+    button.textContent = "Verify CMS & Start Quiz";
+  }
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  }[c]));
+}
+
+function render() {
+  const q = questions[current];
+  document.getElementById("qnum").textContent = "Question " + (current + 1);
+  document.getElementById("question").textContent = q.q;
+
+  const codeContainer = document.getElementById("codeContainer");
+  if (q.code) {
+    codeContainer.classList.remove("hidden");
+    document.getElementById("codeBlock").textContent = q.code.replace(/\\n/g, "\n");
+  } else {
+    codeContainer.classList.add("hidden");
+    document.getElementById("codeBlock").textContent = "";
+  }
+
+  const opts = document.getElementById("options");
+  opts.innerHTML = "";
+  q.options.forEach((option, i) => {
+    const label = document.createElement("label");
+    label.className = "option" + (answers[current] === i ? " selected" : "");
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "answer";
+    radio.checked = answers[current] === i;
+    radio.onchange = () => {
+      answers[current] = i;
+      render();
+    };
+    const span = document.createElement("span");
+    span.textContent = String.fromCharCode(65 + i) + ". " + option;
+    label.append(radio, span);
+    opts.append(label);
+  });
+
+  document.getElementById("progressText").textContent =
+    "Question " + (current + 1) + " of " + questions.length;
+  document.getElementById("prev").disabled = current === 0;
+  document.getElementById("next").textContent =
+    current === questions.length - 1 ? "Last Question" : "Next";
+
+  const nums = document.getElementById("numbers");
+  nums.innerHTML = "";
+  questions.forEach((_, i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = i + 1;
+    if (i === current) b.classList.add("current");
+    if (answers[i] !== null) b.classList.add("done");
+    b.setAttribute("aria-label", "Go to question " + (i + 1));
+    b.onclick = () => { current = i; render(); };
+    nums.append(b);
+  });
+  updateStatus();
+}
+
+function updateStatus() {
+  const count = answers.filter(x => x !== null).length;
+  document.getElementById("answeredText").textContent =
+    "Answered: " + count + "/" + questions.length;
+  document.getElementById("bar").style.width =
+    (count / questions.length * 100) + "%";
+}
+
+function move(direction) {
+  current = Math.max(0, Math.min(questions.length - 1, current + direction));
+  render();
+}
+
+async function submitQuiz() {
+  if (submitting) return;
+  const unanswered = answers.filter(x => x === null).length;
+  if (unanswered && !confirm(unanswered + " question(s) are unanswered. Submit anyway?")) return;
+  if (!verifiedCMS) {
+    alert("Your CMS has not been verified. Please reload the quiz and verify your CMS.");
+    return;
+  }
+
+  submitting = true;
+  document.querySelectorAll("#quiz button").forEach(b => b.disabled = true);
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("submitting").classList.remove("hidden");
+
+  const score = questions.reduce((total, q, i) => total + (answers[i] === q.answer ? 1 : 0), 0);
+
+  try {
+    const result = await callBackend({
+      action: "submit",
+      cms: verifiedCMS,
+      score: score,
+      total: questions.length
+    });
+    if (!result.success) throw new Error(result.message || "The submission was not accepted.");
+    document.getElementById("submissionMessage").textContent =
+      result.message || "Your quiz has been submitted successfully.";
+    document.getElementById("submitting").classList.add("hidden");
+    showResult(score);
+  } catch (error) {
+    document.getElementById("submitting").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+    document.querySelectorAll("#quiz button").forEach(b => b.disabled = false);
+    submitting = false;
+    alert((error.message || "Submission failed.") +
+      " Your answers are still on this page. Please try submitting again.");
+  }
+}
+
+function showResult(score) {
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("greeting").textContent =
+    studentName ? studentName + "'s Result" : "Your Result";
+  document.getElementById("score").textContent = score + " / " + questions.length;
+  document.getElementById("percent").textContent =
+    Math.round(score / questions.length * 100) + "%";
+  document.getElementById("resultMsg").textContent =
+    score >= 27 ? "Excellent work." :
+    score >= 22 ? "Good effort. Review the explanations below." :
+    score >= 15 ? "Keep practising and review the topics you missed." :
+    "Review the course topics and use the explanations to strengthen your understanding.";
+
+  const review = document.getElementById("review");
+  review.innerHTML = "";
+  questions.forEach((q, i) => {
+    const correct = answers[i] === q.answer;
+    const chosen = answers[i] === null ? "Not answered" : q.options[answers[i]];
+    const item = document.createElement("div");
+    item.className = "review";
+
+    const title = document.createElement("div");
+    title.className = "review-q";
+    title.textContent = (i + 1) + ". " + q.q;
+    item.append(title);
+
+    if (q.code) {
+      const wrap = document.createElement("div");
+      wrap.className = "code-wrap review-code";
+      const cap = document.createElement("div");
+      cap.className = "code-title";
+      cap.textContent = "C++ Code";
+      const pre = document.createElement("pre");
+      const code = document.createElement("code");
+      code.textContent = q.code.replace(/\\n/g, "\n");
+      pre.append(code);
+      wrap.append(cap, pre);
+      item.append(wrap);
+    }
+
+    const status = document.createElement("p");
+    status.className = correct ? "correct" : "wrong";
+    status.textContent = (correct ? "Correct" : "Incorrect") + " · Your answer: " + chosen;
+    item.append(status);
+
+    const answer = document.createElement("p");
+    answer.innerHTML = "<strong>Correct answer: " +
+      String.fromCharCode(65 + q.answer) + ". " + escapeHTML(q.options[q.answer]) + "</strong>";
+    item.append(answer);
+
+    const explanation = document.createElement("p");
+    explanation.className = "explanation";
+    explanation.textContent = q.explain;
+    item.append(explanation);
+    review.append(item);
+  });
+}
+</script>
+</body>
+</html>
